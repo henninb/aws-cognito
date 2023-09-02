@@ -38,22 +38,22 @@ class App extends Component {
     const authProperties = {
       isAuthenticated: this.state.isAuthenticated,
       authenticatedUser: this.state.authenticatedUser,
-      setAuthenticatedStatus: this.state.setAuthenticatedStatus,
-      setAuthenticatedUser: this.state.setAuthenticatedUser
+      setAuthenticatedStatus: this.setAuthenticatedStatus,
+      setAuthenticatedUser: this.setAuthenticatedUser
     }
 
     return (
       <div className="App">
         <BrowserRouter>
           <div>
-            <Navbar />
+            <Navbar auth={authProperties} />
             <Routes>
               
 
-              <Route exact path="/" element={<Home auth={authProperties} />} />
+              <Route exact path="/" element={<Home />} />
               <Route exact path="/products" element={<Products />} />
               <Route exact path="/admin" element={<ProductAdmin />} />
-              <Route exact path="/login" element={<LogIn />} />
+              <Route exact path="/login" element={<LogIn auth={authProperties} />} />
               <Route exact path="/register" element={<Register />} />
               <Route exact path="/forgotpassword" element={<ForgotPassword />} />
               <Route exact path="/forgotpasswordverification" element={<ForgotPasswordVerification />} />

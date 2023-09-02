@@ -4,7 +4,7 @@ import Validate from "../utility/FormValidation";
 import { Auth } from "aws-amplify";
 import { useNavigate } from "react-router-dom";
 
-function LogIn() {
+function LogIn({auth}) {
   const navigate = useNavigate();
 
   const [state, setState] = useState({
@@ -42,6 +42,7 @@ function LogIn() {
     // AWS Cognito integration here
     try {
       await Auth.signIn(state.username, state.password);
+      auth.setAuthenticatedStatus(true);
       // Redirect after successful signup if needed
       navigate("/")
     } catch (error) {
