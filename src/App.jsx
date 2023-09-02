@@ -24,14 +24,33 @@ class App extends Component {
     authenticatedUser: null
   }
 
+
+  
+  setAuthenticatedUser = user => {
+    this.setState({authenticatedUser: user});
+  }
+
+  setAuthenticatedStatus = authenticated => {
+    this.setState({isAuthenticated: authenticated});
+  }
+
   render() {
+    const authProperties = {
+      isAuthenticated: this.state.isAuthenticated,
+      authenticatedUser: this.state.authenticatedUser,
+      setAuthenticatedStatus: this.state.setAuthenticatedStatus,
+      setAuthenticatedUser: this.state.setAuthenticatedUser
+    }
+
     return (
       <div className="App">
         <BrowserRouter>
           <div>
             <Navbar />
             <Routes>
-              <Route exact path="/" element={<Home />} />
+              
+
+              <Route exact path="/" element={<Home auth={authProperties} />} />
               <Route exact path="/products" element={<Products />} />
               <Route exact path="/admin" element={<ProductAdmin />} />
               <Route exact path="/login" element={<LogIn />} />
@@ -51,3 +70,4 @@ class App extends Component {
 }
 
 export default App;
+//<Route exact path="/" element={(props) => <Home {...props} auth={authProperties} />} />
