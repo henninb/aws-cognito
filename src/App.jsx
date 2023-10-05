@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-//import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
@@ -13,61 +12,48 @@ import ForgotPasswordVerification from './components/auth/ForgotPasswordVerifica
 import ChangePassword from './components/auth/ChangePassword';
 import ChangePasswordConfirm from './components/auth/ChangePasswordConfirm';
 import Welcome from './components/auth/Welcome';
-import Footer from './components/Footer';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import Footer from './components/Footer';
 library.add(faEdit);
 
-class App extends Component {
-  state = {
-    isAuthenticated : false,
-    authenticatedUser: null
-  }
+export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authenticatedUser, setAuthenticatedUser] = useState(null);
 
+  const authProperties = {
+    isAuthenticated,
+    authenticatedUser,
+    setAuthenticatedStatus: setIsAuthenticated,
+    setAuthenticatedUser,
+  };
 
-  
-  setAuthenticatedUser = user => {
-    this.setState({authenticatedUser: user});
-  }
-
-  setAuthenticatedStatus = authenticated => {
-    this.setState({isAuthenticated: authenticated});
-  }
-
-  render() {
-    const authProperties = {
-      isAuthenticated: this.state.isAuthenticated,
-      authenticatedUser: this.state.authenticatedUser,
-      setAuthenticatedStatus: this.setAuthenticatedStatus,
-      setAuthenticatedUser: this.setAuthenticatedUser
-    }
-
-    return (
-      <div className="App">
-        <BrowserRouter>
-          <div>
-            <Navbar auth={authProperties} />
-            <Routes>
-              
-
-              <Route exact path="/" element={<Home />} />
-              <Route exact path="/products" element={<Products />} />
-              <Route exact path="/admin" element={<ProductAdmin />} />
-              <Route exact path="/login" element={<LogIn auth={authProperties} />} />
-              <Route exact path="/register" element={<Register />} />
-              <Route exact path="/forgotpassword" element={<ForgotPassword />} />
-              <Route exact path="/forgotpasswordverification" element={<ForgotPasswordVerification />} />
-              <Route exact path="/changepassword" element={<ChangePassword />} />
-              <Route exact path="/changepasswordconfirmation" element={<ChangePasswordConfirm />} />
-              <Route exact path="/welcome" element={<Welcome />} />
-            </Routes>
-            <Footer />
-          </div>
-        </BrowserRouter>
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <div>
+          <Navbar auth={authProperties} />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/admin" element={<ProductAdmin />} />
+            <Route path="/login" element={<LogIn auth={authProperties} />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route
+              path="/forgotpasswordverification"
+              element={<ForgotPasswordVerification />}
+            />
+            <Route path="/changepassword" element={<ChangePassword />} />
+            <Route
+              path="/changepasswordconfirmation"
+              element={<ChangePasswordConfirm />}
+            />
+            <Route path="/welcome" element={<Welcome />} />
+          </Routes>
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </div>
+  );
 }
-
-export default App;
-//<Route exact path="/" element={(props) => <Home {...props} auth={authProperties} />} />
